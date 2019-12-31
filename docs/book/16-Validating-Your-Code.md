@@ -28,7 +28,7 @@ C 风格的语言，尤其是 C++，通常会认为性能比安全更重要。�
 
 #### JUnit
 
-最初的 JUnit 发布于 2000 年，大概是基于 Java 1.0，因此不能使用 Java 的反射工具。因此，用旧的 JUnit 编写单元测试是一项相当繁忙和冗长的工作。我发现这个设计令人不爽，并编写了自己的单元测试框架作为[注解](./Annotations.md)一章的示例。这个框架走向了另一个极端，“尝试最简单可行的方法”（极限编程中的一个关键短语）。从那之后，JUnit 通过反射和注解得到了极大的改进，大大简化了编写单元测试代码的过程。在 Java8 中，他们甚至增加了对 lambdas 表达式的支持。本书使用当时最新的 Junit5 版本
+最初的 JUnit 发布于 2000 年，大概是基于 Java 1.0，因此不能使用 Java 的反射工具。因此，用旧的 JUnit 编写单元测试是一项相当繁忙和冗长的工作。我发现这个设计令人不爽，并编写了自己的单元测试框架作为 [注解](./Annotations.md) 一章的示例。这个框架走向了另一个极端，“尝试最简单可行的方法”（极限编程中的一个关键短语）。从那之后，JUnit 通过反射和注解得到了极大的改进，大大简化了编写单元测试代码的过程。在 Java8 中，他们甚至增加了对 lambdas 表达式的支持。本书使用当时最新的 Junit5 版本
 
 在 JUnit 最简单的使用中，使用 **@Test** 注解标记表示测试的每个方法。JUnit 将这些方法标识为单独的测试，并一次设置和运行一个测试，采取措施避免测试之间的副作用。
 
@@ -888,9 +888,9 @@ public class NonNullConstruction {
 
 之所以可以有测试驱动开发（TDD）这种开发方式，是因为如果你在设计和编写代码时考虑到了测试，那么你不仅可以写出可测试性更好的代码，而且还可以得到更好的代码设计。 一般情况下这个说法都是正确的。 一旦我想到“我将如何测试我的代码？”，这个想法将使我的代码产生变化，并且往往是从“可测试”转变为“可用”。
 
-纯粹的TDD主义者会在实现新功能之前就为其编写测试，这称为测试优先的开发。 我们采用一个简易的示例程序来进行说明，它的功能是反转 **String** 中字符的大小写。 让我们随意添加一些约束：**String** 必须小于或等于30个字符，并且必须只包含字母，空格，逗号和句号(英文)。
+纯粹的 TDD 主义者会在实现新功能之前就为其编写测试，这称为测试优先的开发。 我们采用一个简易的示例程序来进行说明，它的功能是反转 **String** 中字符的大小写。 让我们随意添加一些约束：**String** 必须小于或等于30个字符，并且必须只包含字母，空格，逗号和句号(英文)。
 
-此示例与标准TDD不同，因为它的作用在于接收 **StringInverter** 的不同实现，以便在我们逐步满足测试的过程中来体现类的演变。 所以 **StringInverter** 将作为接口来满足这个要求：
+此示例与标准 TDD 不同，因为它的作用在于接收 **StringInverter** 的不同实现，以便在我们逐步满足测试的过程中来体现类的演变。 为了满足这个要求，将 **StringInverter** 作为接口：
 
 ```java
 // validating/StringInverter.java
@@ -901,7 +901,7 @@ interface StringInverter {
 }
 ```
 
-现在我们通过可以编写测试来表述我们的要求。 以下所述通常不是你编写测试的方式，但由于我们在此处有一个特殊的约束：我们要对 **StringInverter **多个版本的实现进行测试，为此，我们利用了JUnit5中最复杂的新功能之一：动态测试生成。 顾名思义，通过它你可以使你所编写的代码在运行时生成测试，而不需要你对每个测试显式编码。 这带来了许多新的可能性，特别是在明确地需要编写一整套测试而令人望而却步的情况下。
+现在我们通过可以编写测试来表述我们的要求。 以下所述通常不是你编写测试的方式，但由于我们在此处有一个特殊的约束：我们要对 **StringInverter **多个版本的实现进行测试，为此，我们利用了 JUnit5 中最复杂的新功能之一：动态测试生成。 顾名思义，通过它你可以使你所编写的代码在运行时生成测试，而不需要你对每个测试显式编码。 这带来了许多新的可能性，特别是在明确地需要编写一整套测试而令人望而却步的情况下。
 
 JUnit5 提供了几种动态生成测试的方法，但这里使用的方法可能是最复杂的。  **DynamicTest.stream() **方法采用了：
 
@@ -1118,7 +1118,7 @@ public class Inverter4 implements StringInverter {
 
 你将从测试输出中看到，每个版本的 **Inverter** 都几乎能通过所有测试。 当你在进行测试优先的开发时会有相同的体验。
 
-**DynamicStringInverterTests.java** 仅是为了显示TDD过程中不同 **StringInverter** 实现的开发。 通常，你只需编写一组如下所示的测试，并修改单个 **StringInverter** 类直到它满足所有测试：
+**DynamicStringInverterTests.java** 仅是为了显示 TDD 过程中不同 **StringInverter** 实现的开发。 通常，你只需编写一组如下所示的测试，并修改单个 **StringInverter** 类直到它满足所有测试：
 
 ```java
 // validating/tests/StringInverterTests.java
@@ -1199,7 +1199,7 @@ public class StringInverterTests {
 
 ### 日志会给出正在运行的程序的各种信息。
 
-在调试程序中，日志可以是显示程序运行过程中的普通状态数据（例如，安装程序可能会记录安装过程中采取的步骤，存储文件的目录，程序的启动值等）。
+在调试程序中，日志可以是普通状态数据，用于显示程序运行过程（例如，安装程序可能会记录安装过程中采取的步骤，存储文件的目录，程序的启动值等）。
 
 在调试期间，日志也能带来好处。 如果没有日志，你可能会尝试通过插入 **println()** 语句来打印出程序的行为。 本书中的一些例子使用了这种技术，并且在没有调试器的情况下（下文中很快就会介绍这样一个主题），它就是你唯一的工具。 但是，一旦你确定程序正常运行，你可能会将 **println()** 语句注释或者删除。 然而，如果你遇到更多错误，你可能又需要运行它们。因此，如果能够只在需要时轻松启用输出程序状态就好多了。
 
@@ -1235,7 +1235,7 @@ public class SLF4JLogging {
 
 日志输出中的格式和信息，甚至输出是否正常或“错误”都取决于 SLF4J 所连接的后端程序包是怎样实现的。 在上面的示例中，它连接到的是 **logback** 库（通过本书的 **build.gradle** 文件），并显示为标准输出。
 
-如果我们修改 **build.gradle **从而不使用内置在 JDK 中的日志包作为后端，则输出显示为错误输出，如下所示：
+如果我们修改 **build.gradle** 从而使用内置在 JDK 中的日志包作为后端，则输出显示为错误输出，如下所示：
 
 **Aug 16, 2016 5:40:31 PM InfoLogging main**
 **INFO: hello logging**
@@ -1303,40 +1303,659 @@ public class SLF4JLevels {
 
 ## 调试
 
+尽管聪明地使用 **System.out** 或日志信息能给我们带来对程序行为的有效见解，但对于困难问题来说，这种方式就显得笨拙且耗时了。
+
+你也可能需要更加深入地理解程序，仅依靠打印日志做不到。此时你需要调试器。除了比打印语句更快更轻易地展示信息以外，调试器还可以设置断点，并在程序运行到这些断点处暂停程序。
+
+使用调试器，可以展示任何时刻的程序状态，查看变量的值，一步一步运行程序，连接远程运行的程序等等。特别是当你构建较大规模的系统（bug 容易被掩埋）时，熟练使用调试器是值得的。
+
+### 使用 JDB 调试
+
+Java 调试器（JDB）是 JDK 内置的命令行工具。从调试的指令和命令行接口两方面看的话，JDB 至少从概念上是 GNU 调试器（GDB，受 Unix DB 的影响）的继承者。JDB 对于学习调试和执行简单的调试任务来说是有用的，而且知道只要安装了 JDK 就可以使用 JDB 是有帮助的。然而，对于大型项目来说，你可能想要一个图形化的调试器，这在后面会描述。
+
+假设你写了如下程序：
+
+```java
+// validating/SimpleDebugging.java
+// {ThrowsException}
+public class SimpleDebugging {
+    private static void foo1() {
+        System.out.println("In foo1");
+        foo2();
+    }
+    
+    private static void foo2() {
+        System.out.println("In foo2");
+        foo3();
+    }
+    
+    private static void foo3() {
+        System.out.println("In foo3");
+        int j = 1;
+        j--;
+        int i = 5 / j;
+    }
+    
+    public static void main(String[] args) {
+        foo1();
+    }
+}
+/* Output
+In foo1
+In foo2
+In foo3
+__[Error Output]__
+Exception in thread "main"
+java.lang.ArithmeticException: /by zero 
+at 
+SimpleDebugging.foo3(SimpleDebugging.java:17)
+at 
+SimpleDebugging.foo2(SimpleDebugging.java:11)
+at
+SimpleDebugging.foo1(SimpleDebugging.java:7)
+at
+SimpleDebugging.main(SimpleDebugging.java:20)
+```
+
+首先看方法 `foo3()`，问题很明显：除数是 0。但是假如这段代码被埋没在大型程序中（像这里的调用序列暗示的那样）而且你不知道从哪儿开始查找问题。结果呢，异常会给出足够的信息让你定位问题。然而，假设事情更加复杂，你必须更加深入程序中来获得比异常提供的更多的信息。
+
+为了运行 JDB，你需要在编译 **SimpleDebugging.java** 时加上 **-g** 标记，从而告诉编译器生成编译信息。然后使用如下命令开始调试程序：
+
+**jdb SimpleDebugging**
+
+接着 JDB 就会运行，出现命令行提示。你可以输入 **?** 查看可用的 JDB 命令。
+
+这里展示了如何使用交互式追踪一个问题的调试历程：
+
+**Initializing jdb...**
+
+**> catch Exception**
+
+`>` 表明 JDB 在等待输入命令。命令 **catch Exception** 在任何抛出异常的地方设置断点（然而，即使你不显式地设置断点，调试器也会停止— JDB 中好像是默认在异常抛出处设置了异常）。接着命令行会给出如下响应：
+
+**Deferring exception catch Exception.**
+
+**It will be set after the class is loaded.**
+
+继续输入：
+
+**> run**
+
+现在程序将运行到下个断点处，在这个例子中就是异常发生的地方。下面是运行 **run** 命令的结果：
+
+**run SimpleDebugging**
+
+**Set uncaught java.lang.Throwable**
+
+**Set deferred uncaught java.lang.Throwable**
+
+**>**
+
+**VM Started: In foo1**
+
+**In foo2**
+
+**In foo3**
+
+**Exception occurred: java.lang.ArithmeticException**
+
+**(uncaught)"thread=main",**
+
+**SimpleDebugging.foo3(),line=16 bci=15**
+
+**16 int i = 5 / j**
+
+程序运行到第16行时发生异常，但是 JDB 在异常发生时就不复存在。调试器还展示了是哪一行导致了异常。你可以使用 **list** 将导致程序终止的执行点列出来：
+
+**main[1] list**
+
+**12 private static void foo3() {**
+
+**13 System.out.println("In foo3");**
+
+**14 int j = 1;**
+
+**15 j--;**
+
+**16 => int i = 5 / j;**
+
+**17 }**
+
+**18 public static void main(String[] args) {**
+
+**19 foo1();**
+
+**20 }**
+
+**21 }**
+
+**/* Output:**
+
+上述 `=>` 展示了程序将继续运行的执行点。你可以使用命令 **cont**(continue) 继续运行，但是会导致 JDB 在异常发生时退出并打印出栈轨迹信息。
+
+命令 **locals** 能转储所有的局部变量值：
+
+**main[1] locals**
+
+**Method arguments:**
+
+**Local variables:**
+
+**j = 0**
+
+命令 **wherei** 打印进入当前线程的方法栈中的栈帧信息：
+
+**main[1] wherei**
+
+**[1] SimpleDebugging.foo3(SimpleDebugging.java:16), pc =15**
+
+**[2] SimpleDebugging.foo2(SimpleDebugging.java:10), pc = 8**
+
+**[3] SimpleDebugging.foo1(SimpleDebugging.java:6), pc = 8**
+
+**[4] SimpleDebugging.main(SimpleDebugging.java:19), pc = 10**
+
+**wherei** 后的每一行代表一个方法调用和调用返回点（由程序计数器显示数值）。这里的调用序列是 **main()**, **foo1()**, **foo2()** 和 **foo3()**。
+
+因为命令 **list** 展示了执行停止的地方，所以你通常有足够的信息得知发生了什么并修复它。命令 **help** 将会告诉你更多关于 **jdb** 的用法，但是在花更多的时间学习它之前必须明白命令行调试器往往需要花费更多的精力得到结果。使用 **jdb** 学习调试的基础部分，然后转而学习图形界面调试器。
+
+### 图形化调试器
+
+使用类似 JDB 的命令行调试器是不方便的。它需要显式的命令去查看变量的状态(**locals**, **dump**)，列出源代码中的执行点(**list**)，查找系统中的线程(**threads**)，设置断点(**stop in**, **stop at**)等等。使用图形化调试器只需要点击几下，不需要使用显式的命令就能使用这些特性，而且能查看被调试程序的最新细节。
+
+因此，尽管你可能一开始用 JDB 尝试调试，但是你将发现使用图形化调试器能更加高效、更快速地追踪 bug。IBM 的 Eclipse，Oracle 的 NetBeans 和 JetBrains 的 IntelliJ 这些集成开发环境都含有面向  Java 语言的好用的图形化调试器。
+
 <!-- Benchmarking -->
 
 ## 基准测试
 
+> 我们应该忘掉微小的效率提升，说的就是这些 97% 的时间做的事：过早的优化是万恶之源。
+>
+> ​                                                                                                                       —— Donald Knuth
+
+如果你发现自己正在过早优化的滑坡上，你可能浪费了几个月的时间(如果你雄心勃勃的话)。通常，一个简单直接的编码方法就足够好了。如果你进行了不必要的优化，就会使你的代码变得无谓的复杂和难以理解。
+
+基准测试意味着对代码或算法片段进行计时看哪个跑得更快，与下一节的分析和优化截然相反，分析优化是观察整个程序，找到程序中最耗时的部分。
+
+可以简单地对一个代码片段的执行计时吗？在像 C 这样直接的编程语言中，这个方法的确可行。在像 Java 这样拥有复杂的运行时系统的编程语言中，基准测试变得更有挑战性。为了生成可靠的数据，环境设置必须控制诸如 CPU 频率，节能特性，其他运行在相同机器上的进程，优化器选项等等。
+
+### 微基准测试
+
+写一个计时工具类从而比较不同代码块的执行速度是具有吸引力的。看上去这会产生一些有用的数据。比如，这里有一个简单的 **Timer** 类，可以用以下两种方式使用它：
+
+1. 创建一个 **Timer** 对象，执行一些操作然后调用 **Timer** 的 **duration()** 方法产生以毫秒为单位的运行时间。
+2. 向静态的 **duration()** 方法中传入 **Runnable**。任何符合 **Runnable** 接口的类都有一个函数式方法 **run()**，该方法没有入参，且没有返回。
+
+```java
+// onjava/Timer.java
+package onjava;
+import static java.util.concurrent.TimeUnit.*;
+
+public class Timer {
+    private long start = System.nanoTime();
+    
+    public long duration() {
+        return NANOSECONDS.toMillis(System.nanoTime() - start);
+    }
+    
+    public static long duration(Runnable test) {
+        Timer timer = new Timer();
+        test.run();
+        return timer.duration();
+    }
+}
+```
+
+这是一个很直接的计时方式。难道我们不能只运行一些代码然后看它的运行时长吗？
+
+有许多因素会影响你的结果，即使是生成提示符也会造成计时的混乱。这里举一个看上去天真的例子，它使用了 标准的 Java **Arrays** 库（后面会详细介绍）：
+
+```java
+// validating/BadMicroBenchmark.java
+// {ExcludeFromTravisCI}
+import java.util.*;
+import onjava.Timer;
+
+public class BadMicroBenchmark {
+    static final int SIZE = 250_000_000;
+    
+    public static void main(String[] args) {
+        try { // For machines with insufficient memory
+            long[] la = new long[SIZE];
+            System.out.println("setAll: " + Timer.duration(() -> Arrays.setAll(la, n -> n)));
+            System.out.println("parallelSetAll: " + Timer.duration(() -> Arrays.parallelSetAll(la, n -> n)));
+        } catch (OutOfMemoryError e) {
+            System.out.println("Insufficient memory");
+            System.exit(0);
+        }
+    }
+    
+}
+/* Output
+setAll: 272
+parallelSetAll: 301
+```
+
+**main()** 方法的主体包含在 **try** 语句块中，因为一台机器用光内存后会导致构建停止。
+
+对于一个长度为 250,000,000 的 **long** 型（仅仅差一点就会让大部分机器内存溢出）数组，我们比较了 **Arrays.setAll()** 和 **Arrays.parallelSetAll()** 的性能。这个并行的版本会尝试使用多个处理器加快完成任务（尽管我在这一节谈到了一些并行的概念，但是在 [并发编程](./24-Concurrent-Programming.md) 章节我们才会详细讨论这些 ）。然而非并行的版本似乎运行得更快，尽管在不同的机器上结果可能不同。
+
+**BadMicroBenchmark.java** 中的每一步操作都是独立的，但是如果你的操作依赖于同一资源，那么并行版本运行的速度会骤降，因为不同的进程会竞争相同的那个资源。
+
+```java
+// validating/BadMicroBenchmark2.java
+// Relying on a common resource
+
+import java.util.*;
+import onjava.Timer;
+
+public class BadMicroBenchmark2 {
+    static final int SIZE = 5_000_000;
+    
+    public static void main(String[] args) {
+        long[] la = new long[SIZE];
+        Random r = new Random();
+        System.out.println("parallelSetAll: " + Timer.duration(() -> Arrays.parallelSetAll(la, n -> r.nextLong())));
+        System.out.println("setAll: " + Timer.duration(() -> Arrays.setAll(la, n -> r.nextLong())));
+        SplittableRandom sr = new SplittableRandom();
+        System.out.println("parallelSetAll: " + Timer.duration(() -> Arrays.parallelSetAll(la, n -> sr.nextLong())));
+        System.out.println("setAll: " + Timer.duration(() -> Arrays.setAll(la, n -> sr.nextLong())));
+    }
+}
+/* Output
+parallelSetAll: 1147
+setAll: 174
+parallelSetAll: 86
+setAll: 39
+```
+
+**SplittableRandom** 是为并行算法设计的，它当然看起来比普通的 **Random** 在 **parallelSetAll()** 中运行得更快。 但是看上去还是比非并发的 **setAll()** 运行时间更长，有点难以置信（也许是真的，但我们不能通过一个坏的微基准测试得到这个结论）。
+
+这只考虑了微基准测试的问题。Java 虚拟机 Hotspot 也非常影响性能。如果你在测试前没有通过运行代码给 JVM 预热，那么你就会得到“冷”的结果，不能反映出代码在 JVM 预热之后的运行速度（假如你运行的应用没有在预热的 JVM 上运行，你就可能得不到所预期的性能，甚至可能减缓速度）。
+
+优化器有时可以检测出你创建了没有使用的东西，或者是部分代码的运行结果对程序没有影响。如果它优化掉你的测试，那么你可能得到不好的结果。
+
+一个良好的微基准测试系统能自动地弥补像这样的问题（和很多其他的问题）从而产生合理的结果，但是创建这么一套系统是非常棘手，需要深入的知识。
+
+### JMH 的引入
+
+截止目前为止，唯一能产生像样结果的 Java 微基准测试系统就是 Java Microbenchmarking Harness，简称 JMH。本书的 **build.gradle** 自动引入了 JMH 的设置，所以你可以轻松地使用它。
+
+你可以在命令行编写 JMH 代码并运行它，但是推荐的方式是让 JMH 系统为你运行测试；**build.gradle** 文件已经配置成只需要一条命令就能运行 JMH 测试。
+
+JMH 尝试使基准测试变得尽可能简单。例如，我们将使用 JMH 重新编写 **BadMicroBenchmark.java**。这里只有 **@State** 和 **@Benchmark** 这两个注解是必要的。其余的注解要么是为了产生更多易懂的输出，要么是加快基准测试的运行速度（JMH 基准测试通常需要运行很长时间）：
+
+```java
+// validating/jmh/JMH1.java
+package validating.jmh;
+import java.util.*;
+import org.openjdk.jmh.annotations.*;
+import java.util.concurrent.TimeUnit;
+
+@State(Scope.Thread)
+@BenchmarkMode(Mode.AverageTime)
+@OutputTimeUnit(TimeUnit.MICROSECONDS)
+// Increase these three for more accuracy:
+@Warmup(iterations = 5)
+@Measurement(iterations = 5)
+@Fork(1)
+public class JMH1 {
+    private long[] la;
+    
+    @Setup
+    public void setup() {
+        la = new long[250_000_000];
+    }
+    
+    @Benchmark
+    public void setAll() {
+        Arrays.setAll(la, n -> n);
+    }
+    
+    public void parallelSetAll() {
+        Arrays.parallelSetAll(la, n -> n);
+    }
+}
+```
+
+“forks” 的默认值是 10，意味着每个测试都运行 10 次。为了减少运行时间，这里使用了 **@Fork** 注解来减少这个次数到 1。我还使用了 **@Warmup** 和 **@Measurement** 注解将它们默认的运行次数从 20 减少到 5 次。尽管这降低了整体的准确率，但是结果几乎与使用默认值相同。可以尝试将 **@Warmup**、**@Measurement** 和 **@Fork** 都注释掉然后看使用它们的默认值，结果会有多大显著的差异；一般来说，你应该只能看到长期运行的测试使错误因素减少，而结果没有多大变化。
+
+需要使用显式的 gradle 命令才能运行基准测试（在示例代码的根目录处运行）。这能防止耗时的基准测试运行其他的 **gradlew** 命令：
+
+**gradlew validating:jmh**
+
+这会花费几分钟的时间，取决于你的机器(如果没有注解上的调整，可能需要几个小时)。控制台会显示 **results.txt** 文件的路径，这个文件统计了运行结果。注意，**results.txt** 包含这一章所有 **jmh** 测试的结果：**JMH1.java**，**JMH2.java** 和 **JMH3.java**。
+
+因为输出是绝对时间，所以在不同的机器和操作系统上结果各不相同。重要的因素不是绝对时间，我们真正观察的是一个算法和另一个算法的比较，尤其是哪一个运行得更快，快多少。如果你在自己的机器上运行测试，你将看到不同的结果却有着相同的模式。
+
+我在大量的机器上运行了这些测试，尽管不同的机器上得到的绝对值结果不同，但是相对值保持着合理的稳定性。我只列出了 **results.txt** 中适当的片段并加以编辑使输出更加易懂，而且内容大小适合页面。所有测试中的 **Mode** 都以 **avgt** 展示，代表 “平均时长”。**Cnt**（测试的数目）的值是 200，尽管这里的一个例子中配置的 **Cnt** 值是 5。**Units** 是 **us/op**，是 “Microseconds per operation” 的缩写，因此，这个值越小代表性能越高。
+
+我同样也展示了使用 warmups、measurements 和 forks 默认值的输出。我删除了示例中相应的注解，就是为了获取更加准确的测试结果（这将花费数小时）。结果中数字的模式应该仍然看起来相同，不论你如何运行测试。
+
+下面是 **JMH1.java** 的运行结果：
+
+**Benchmark Score**
+
+**JMH1.setAll 196280.2**
+
+**JMH1.parallelSetAll 195412.9**
+
+即使像 JMH 这么高级的基准测试工具，基准测试的过程也不容易，练习时需要倍加小心。这里测试产生了反直觉的结果：并行的版本 **parallelSetAll()** 花费了与非并行版本的 **setAll()** 相同的时间，两者似乎都运行了相当长的时间。
+
+当创建这个示例时，我假设如果我们要测试数组初始化的话，那么使用非常大的数组是有意义的。所以我选择了尽可能大的数组；如果你实验的话会发现一旦数组的大小超过 2亿5000万，你就开始会得到内存溢出的异常。然而，在这么大的数组上执行大量的操作从而震荡内存系统，产生无法预料的结果是有可能的。不管这个假设是否正确，看上去我们正在测试的并非是我们想测试的内容。
+
+考虑其他的因素：
+
+C：客户端执行操作的线程数量
+
+P：并行算法使用的并行数量
+
+N：数组的大小：**10^(2*k)**，通常来说，**k=1..7** 足够来练习不同的缓存占用。
+
+Q：setter 的操作成本
+
+这个 C/P/N/Q 模型在早期 JDK 8 的 Lambda 开发期间付出水面，大多数并行的 Stream 操作(**parallelSetAll()** 也基本相似)都满足这些结论：**N*Q**(主要工作量)对于并发性能尤为重要。并行算法在工作量较少时可能实际运行得更慢。
+
+在一些情况下操作竞争如此激烈使得并行毫无帮助，而不管 **N*Q** 有多大。当 **C** 很大时，**P** 就变得不太相关（内部并行在大量的外部并行面前显得多余）。此外，在一些情况下，并行分解会让相同的 **C** 个客户端运行得比它们顺序运行代码更慢。
+
+基于这些信息，我们重新运行测试，并在这些测试中使用不同大小的数组（改变 **N**）：
+
+```java
+// validating/jmh/JMH2.java
+package validating.jmh;
+import java.util.*;
+import org.openjdk.jmh.annotations.*;
+import java.util.concurrent.TimeUnit;
+
+@State(Scope.Thread)
+@BenchmarkMode(Mode.AverageTime)
+@OutputTimeUnit(TimeUnit.MICROSECONDS)
+@Warmup(iterations = 5)
+@Measurement(iterations = 5)
+@Fork(1)
+public class JMH2 {
+
+    private long[] la;
+
+    @Param({
+            "1",
+            "10",
+            "100",
+            "1000",
+            "10000",
+            "100000",
+            "1000000",
+            "10000000",
+            "100000000",
+            "250000000"
+    })
+    int size;
+
+    @Setup
+    public void setup() {
+        la = new long[size];
+    }
+
+    @Benchmark
+    public void setAll() {
+        Arrays.setAll(la, n -> n);
+    }
+
+    @Benchmark
+    public void parallelSetAll() {
+        Arrays.parallelSetAll(la, n -> n);
+    }
+}
+```
+
+**@Param** 会自动地将其自身的值注入到变量中。其自身的值必须是字符串类型，并可以转化为适当的类型，在这个例子中是 **int** 类型。
+
+下面是已经编辑过的结果，包含精确计算出的加速数值：
+
+| JMH2 Benchmark     | Size      | Score %    | Speedup |
+| ------------------ | --------- | ---------- | ------- |
+| **setAll**         | 1         | 0.001      |         |
+| **parallelSetAll** | 1         | 0.036      | 0.028   |
+| **setAll**         | 10        | 0.005      |         |
+| **parallelSetAll** | 10        | 3.965      | 0.001   |
+| **setAll**         | 100       | 0.031      |         |
+| **parallelSetAll** | 100       | 3.145      | 0.010   |
+| **setAll**         | 1000      | 0.302      |         |
+| **parallelSetAll** | 1000      | 3.285      | 0.092   |
+| **setAll**         | 10000     | 3.152      |         |
+| **parallelSetAll** | 10000     | 9.669      | 0.326   |
+| **setAll**         | 100000    | 34.971     |         |
+| **parallelSetAll** | 100000    | 20.153     | 1.735   |
+| **setAll**         | 1000000   | 420.581    |         |
+| **parallelSetAll** | 1000000   | 165.388    | 2.543   |
+| **setAll**         | 10000000  | 8160.054   |         |
+| **parallelSetAll** | 10000000  | 7610.190   | 1.072   |
+| **setAll**         | 100000000 | 79128.752  |         |
+| **parallelSetAll** | 100000000 | 76734.671  | 1.031   |
+| **setAll**         | 250000000 | 199552.121 |         |
+| **parallelSetAll** | 250000000 | 191791.927 | 1.040   |
+可以看到当数组大小达到 10 万左右时，**parallelSetAll()** 开始反超，而后趋于与非并行的运行速度相同。即使它运行速度上胜了，看起来也不足以证明由于并行的存在而使速度变快。
+
+**setAll()/parallelSetAll()** 中工作的计算量起很大影响吗？在前面的例子中，我们所做的只有对数组的赋值操作，这可能是最简单的任务。所以即使 **N** 值变大，**N*Q** 也仍然没有达到巨大，所以看起来像是我们没有为并行提供足够的机会（JMH 提供了一种模拟变量 Q 的途径；如果想了解更多的话，可搜索 **Blackhole.consumeCPU**）。
+
+我们通过使方法 **f()** 中的任务变得更加复杂，从而产生更多的并行机会：
+
+```java
+// validating/jmh/JMH3.java
+package validating.jmh;
+import java.util.*;
+import org.openjdk.jmh.annotations.*;
+import java.util.concurrent.TimeUnit;
+
+@State(Scope.Thread)
+@BenchmarkMode(Mode.AverageTime)
+@OutputTimeUnit(TimeUnit.MICROSECONDS)
+@Warmup(iterations = 5)
+@Measurement(iterations = 5)
+@Fork(1)
+public class JMH3 {
+    private long[] la;
+
+    @Param({
+            "1",
+            "10",
+            "100",
+            "1000",
+            "10000",
+            "100000",
+            "1000000",
+            "10000000",
+            "100000000",
+            "250000000"
+    })
+    int size;
+
+    @Setup
+    public void setup() {
+        la = new long[size];
+    }
+
+    public static long f(long x) {
+        long quadratic = 42 * x * x + 19 * x + 47;
+        return Long.divideUnsigned(quadratic, x + 1);
+    }
+
+    @Benchmark
+    public void setAll() {
+        Arrays.setAll(la, n -> f(n));
+    }
+
+    @Benchmark
+    public void parallelSetAll() {
+        Arrays.parallelSetAll(la, n -> f(n));
+    }
+}
+```
+
+**f()** 方法提供了更加复杂且耗时的操作。现在除了简单的给数组赋值外，**setAll()** 和 **parallelSetAll()** 都有更多的工作去做，这肯定会影响结果。
+
+| JMH2 Benchmark     | Size      | Score %     | Speedup |
+| ------------------ | --------- | ----------- | ------- |
+| **setAll**         | 1         | 0.012       |         |
+| **parallelSetAll** | 1         | 0.047       | 0.255   |
+| **setAll**         | 10        | 0.107       |         |
+| **parallelSetAll** | 10        | 3.894       | 0.027   |
+| **setAll**         | 100       | 0.990       |         |
+| **parallelSetAll** | 100       | 3.708       | 0.267   |
+| **setAll**         | 1000      | 133.814     |         |
+| **parallelSetAll** | 1000      | 11.747      | 11.391  |
+| **setAll**         | 10000     | 97.954      |         |
+| **parallelSetAll** | 10000     | 37.259      | 2.629   |
+| **setAll**         | 100000    | 988.475     |         |
+| **parallelSetAll** | 100000    | 276.264     | 3.578   |
+| **setAll**         | 1000000   | 9203.103    |         |
+| **parallelSetAll** | 1000000   | 2826.974    | 3.255   |
+| **setAll**         | 10000000  | 92144.951   |         |
+| **parallelSetAll** | 10000000  | 28126.202   | 3.276   |
+| **setAll**         | 100000000 | 921701.863  |         |
+| **parallelSetAll** | 100000000 | 266750.543  | 3.455   |
+| **setAll**         | 250000000 | 2299127.273 |         |
+| **parallelSetAll** | 250000000 | 538173.425  | 4.272   |
+
+可以看到当数组的大小达到 1000 左右时，**parallelSetAll()** 的运行速度反超了 **setAll()**。看来 **parallelSetAll()** 严重依赖数组中计算的复杂度。这正是基准测试的价值所在，因为我们已经得到了关于 **setAll()** 和 **parallelSetAll()** 间微妙的信息，知道在何时使用它们。
+
+这显然不是从阅读 Javadocs 就能得到的。
+
+大多数时候，JMH 的简单应用会产生好的结果（正如你将在本书后面例子中所见），但是我们从这里知道，你不能一直假定 JMH 会产生好的结果。 JMH 网站上的范例可以帮助你开始。
+
 <!-- Profiling and Optimizing -->
 
-## 分析和优化
+## 剖析和优化
+
+有时你必须检测程序运行时间花在哪儿，从而看是否可以优化那一块的性能。剖析器可以找到这些导致程序慢的地方，因而你可以找到最轻松，最明显的方式加快程序运行速度。
+
+剖析器收集的信息能显示程序哪一部分消耗内存，哪个方法最耗时。一些剖析器甚至能关闭垃圾回收，从而帮助限定内存分配的模式。
+
+剖析器还可以帮助检测程序中的线程死锁。注意剖析和基准测试的区别。剖析关注的是已经运行在真实数据上的整个程序，而基准测试关注的是程序中隔离的片段，通常是去优化算法。
+
+安装 Java 开发工具包（JDK）时会顺带安装一个虚拟的剖析器，叫做 **VisualVM**。它会被自动安装在与 **javac** 相同的目录下，你的执行路径应该已经包含该目录。启动 VisualVM 的控制台命令是：
+
+**> jvisualvm**
+
+运行该命令后会弹出一个窗口，其中包括一些指向帮助信息的链接。
+
+### 优化准则
+
+- 避免为了性能牺牲代码的可读性。
+- 不要独立地看待性能。衡量与带来的收益相比所需投入的工作量。
+- 程序的大小很重要。性能优化通常只对运行了长时间的大型项目有价值。性能通常不是小项目的关注点。
+- 运行起来程序比一心钻研它的性能具有更高的优先级。一旦你已经有了可工作的程序，如有必要的话，你可以使用剖析器提高它的效率。只有当性能是关键因素时，才需要在设计/开发阶段考虑性能。
+- 不要猜测瓶颈发生在哪。运行剖析器，让剖析器告诉你。
+- 无论何时有可能的话，显式地设置实例为 null 表明你不再用它。这对垃圾收集器来说是个有用的暗示。
+- **static final** 修饰的变量会被 JVM 优化从而提高程序的运行速度。因而程序中的常量应该声明 **static final**。
 
 <!-- Style Checking -->
 
 ## 风格检测
 
+当你在一个团队中工作时(包括尤其是开源项目)，让每个人遵循相同的代码风格是非常有帮助的。这样阅读项目的代码时，不会因为风格的不同产生思维上的中断。然而，如果你习惯了某种不同的代码风格，那么记住项目中所有的风格准则对你来说可能是困难的。幸运的是，存在可以指出你代码中不符合风格准则的工具。
+
+一个流行的风格检测器是 **Checkstyle**。查看本书 [示例代码](https://github.com/BruceEckel/OnJava8-Examples) 中的 **gradle.build** 和 **checkstyle.xml** 文件中配置代码风格的方式。checkstyle.xml 是一个常用检测的集合，其中一些检测被注释掉了以允许使用本书中的代码风格。
+
+运行所有风格检测的命令是：
+
+**gradlew checkstyleMain**
+
+一些文件仍然产生了风格检测警告，通常是因为这些例子展示了你在生产代码中不会使用的样例。
+
+你还可以针对一个具体的章节运行代码检测。例如，下面命令会运行 [Annotations](./23-Annotations.md) 章节的风格检测：
+
+**gradlew annotations:checkstyleMain**
+
 <!-- Static Error Analysis -->
 
 ## 静态错误分析
+
+尽管 Java 的静态类型检测可以发现基本的语法错误，其他的分析工具可以发现躲避 **javac** 检测的更加复杂的bug。一个这样的工具叫做 **Findbugs**。本书 [示例代码](https://github.com/BruceEckel/OnJava8-Examples) 中的 **build.gradle** 文件包含了 Findbugs 的配置，所以你可以输入如下命令：
+
+**gradlew findbugsMain**
+
+这会为每一章生成一个名为 **main.html** 的报告，报告中会说明代码中潜在的问题。Gradle 命令的输出会告诉你每个报告在何处。
+
+当你查看报告时，你将会看到很多 false positive 的情况，即代码没问题却报告了问题。我在一些文件中展示了不要做一些事的代码确实是正确的。
+
+当我最初看到本书的 Findbugs 报告时，我发现了一些不是技术错误的地方，但能使我改善代码。如果你正在寻找 bug，那么在调试之前运行 Findbugs 是值得的，因为这将可能节省你数小时的时间找到问题。
 
 <!-- Code Reviews -->
 
 ## 代码重审
 
+单元测试能找到明显重要的 bug 类型，风格检测和 Findbugs 能自动执行代码重审，从而发现额外的问题。最终你走到了必须人为参与进来的地步。代码重审是一个或一群人的一段代码被另一个或一群人阅读和评估的众多方式之一。这最初看起来会使人不安，而且需要情感信任，但它的目的肯定不是羞辱任何人。它的目标是找到程序中的错误，代码重审是最成功的能做到这点的途径之一。可惜的是，它们也经常被认为是“过于昂贵的”（有时这会成为程序员避免代码被重审时感到尴尬的借口）。
+
+代码重审可以作为结对编程的一部分，作为代码签入过程的一部分（另一个程序员自动安排上审查新代码的任务）或使用群组预排的方式，即每个人阅读代码并讨论之。后一种方式对于分享知识和营造代码文化是极其有益的。
+
 <!-- Pair Programming -->
 
 ## 结对编程
+
+结对编程是指两个程序员一起编程的实践活动。通常来说，一个人“驱动”（敲击键盘，输入代码），另一人（观察者或指引者）重审和分析代码，同时也要思考策略。这产生了一种实时的代码重审。通常程序员会定期地互换角色。
+
+结对编程有很多好处，但最显著的是分享知识和防止阻塞。最佳传递信息的方式之一就是一起解决问题，我已经在很多次研讨会使用了结对编程，都取得了很好的效果（同时，研讨会上的众人可以通过这种方式互相了解对方）。而且两个人一起工作时，可以更容易地推进开发的进展，而只有一个程序员的话，可能被轻易地卡住。结对编程的程序员通常可以从工作中感到更高的满足感。有时很难向管理人员们推行结对编程，因为他们可能觉得两个程序员解决同一个问题的效率比他们分开解决不同问题的效率低。尽管短期内是这样，但是结对编程能带来更高的代码质量；除了结对编程的其他益处，如果你眼光长远的话，这会产生更高的生产力。
+
+维基百科上这篇 [结对编程的文章](https://en.wikipedia.org/wiki/Pair_programming) 可以作为你深入了解结对编程的开始。
 
 <!-- Refactoring -->
 
 ## 重构
 
+技术负债是指迭代发展的软件中为了应急而生的丑陋解决方案从而导致设计难以理解，代码难以阅读的部分。特别是当你必须修改和增加新特性的时候，这会造成麻烦。
+
+重构可以矫正技术负债。重构的关键是它能改善代码设计，结构和可读性（因而减少代码负债），但是它不能改变代码的行为。
+
+很难向管理人员推行重构：“我们将投入很多工作不是增加新的特性，当我们完成时，外界无感知变化。但是相信我们，事情会变得更加美好”。不幸的是，管理人员意识到重构的价值时都为时已晚了：当他们提出增加新的特性时，你不得不告诉他们做不到，因为代码基底已经埋藏了太多的问题，试图增加新特性可能会使软件崩溃，即使你能想出怎么做。
+
+### 重构基石
+
+在开始重构代码之前，你需要有以下三个系统的支撑：
+
+1. 测试（通常，JUnit 测试作为最小的根基），因此你能确保重构不会改变代码的行为。
+2. 自动构建，因而你能轻松地构建代码，运行所有的测试。通过这种方式做些小修改并确保修改不会破坏任何事物是毫不费力的。本书使用的是 Gradle 构建系统，你可以在 [代码示例](https://github.com/BruceEckel/OnJava8-Examples) 的 **build.gradle** 文件中查看示例。
+3. 版本控制，以便你能回退到可工作的代码版本，能够一直记录重构的每一步。
+
+本书的代码托管在 [Github](https://github.com/BruceEckel/OnJava8-Examples) 上，使用的是 **git** 版本控制系统。
+
+没有这三个系统的支持，重构几乎是不可能的。确实，没有这些系统，起初维护和增加代码是一个巨大的挑战。令人意外的是，有很多成功的公司竟然在没有这三个系统的情况下在相当长的时间里勉强过得去。然而，对于这样的公司来说，在他们遇到严重的问题之前，这只是个时间问题。
+
+维基百科上的 [重构文章](https://en.wikipedia.org/wiki/Code_refactoring) 提供了更多的细节。
+
 <!-- Continuous Integration -->
 
 ## 持续集成
+
+在软件开发的早期，人们只能一次处理一步，所以他们坚信他们总是在经历快乐之旅，每个开发阶段无缝进入下一个。这种错觉经常被称为软件开发中的“瀑布流模型”。很多人告诉我瀑布流是他们的选择方法，好像这是一个选择工具，而不仅是一厢情愿。
+
+在这片童话的土地上，每一步都按照指定的预计时间准时完美结束，然后下一步开始。当最后一步结束时，所有的部件都可以无缝地滑在一起，瞧，一个装载产品诞生了！
+
+当然，现实中没有事能按计划或预计时间运作。相信它应该，然后当它不能时更加相信，只会使整件事变得更糟。否认证据不会产生好的结果。
+
+除此之外，产品本身经常也不是对客户有价值的事物。有时一大堆的特性完全是浪费时间，因为创造出这些特性需求的人不是客户而是其他人。
+
+因为受流水工作线的思路影响，所以每个开发阶段都有自己的团队。上游团队的延期传递到下游团队，当到了需要进行测试和集成的时候，这些团队被指望赶上预期时间，当他们必然做不到时，就认为他们是“差劲的团队成员”。不可能的时间安排和负相关的结合产生了自实现的预期：只有最绝望的开发者才会乐意做这些工作。
+
+另外，商学院培养出的管理人员仍然被训练成只在已有的流程上做一些改动——这些流程都是基于工业时代制造业的想法上。注重培养创造力而不是墨守成规的商学院仍然很稀有。终于一些编程领域的人们再也忍受不了这种情况并开始进行实验。最初一些实验叫做“极限编程”，因为它们与工业时代的思想完全不同。随着实验展示的结果，这些思想开始看起来像是常识。这些实验逐渐形成了如今显而易见的观点——尽管非常小——即把生产可运作的产品交到客户手中，询问他们 (A) 是否想要它 (B) 是否喜欢它工作的方式 (C) 还希望有什么其他有用的功能特性。然后这些信息反馈给开发，从而继续产出一个新版本。版本不断迭代，项目最终演变成为客户带来真正价值的事物。
+
+这完全颠倒了瀑布流开发的方式。你停止假设你要处理产品测试和把部署"作为最后一步"这类的事情。相反，每件事从开始到结束必须都在进行——即使一开始产品几乎没有任何特性。这么做对于在开发周期的早期发现更多问题有巨大的益处。此外，不是做大量宏大超前的计划和花费时间金钱在许多无用的特性上，而是一直都能从顾客那得到反馈。当客户不再需要其他特性时，你就完成了。这节省了大量的时间和金钱，并提高了顾客的满意度。
+
+有许多不同的想法导向这种方式，但是目前首要的术语叫持续集成（CI）。CI 与导向 CI 的想法之间的不同之处在于 CI 是一种独特的机械式的过程，过程中涵盖了这些想法；它是一种定义好的做事方式。事实上，它定义得如此明确以至于整个过程是自动化的。
+
+当前 CI 技术的高峰是持续集成服务器。这是一台独立的机器或虚拟机，通常是由第三方公司托管的完全独立的服务。这些公司通常免费提供基本服务，如果你需要额外的特性如更多的处理器或内存或者专门的工具或系统，你需要付费。CI 服务器起初是完全空白状态，即只是可用的操作系统的最小配置。这很重要因为你可能之前在你的开发机器上安装过一些程序，却没有在你的构建和部署系统中包含它。正如重构一样，持续集成需要分布式版本管理，自动构建和自动测试系统作为基础。通常来说，CI 服务器会绑定到你的版本控制仓库上。当 CI 服务器发现仓库中有改变时，就会拉取最新版本的代码，并按照 CI 脚本中的过程处理。这包括安装所有必要的工具和类库（记住，CI 服务器起初只有一个干净、基本的操作系统），所以如果过程中出现任何问题，你都可以发现它们。接着它会执行脚本中定义的构建和测试操作；通常脚本中使用的命令与人们在安装和测试中使用的命令完全相同。如果执行成功或失败，CI 服务器会有许多种方式汇报给你，包括在你的代码仓库上显示一个简单的标记。
+
+使用持续集成，每次你合进仓库时，这些改变都会被从头到尾验证。通过这种方式，一旦出现问题你能立即发现。甚至当你准备交付一个产品的新版本时，都不会有延迟或其他必要的额外步骤（在任何时刻都可以交付叫做持续交付）。
+
+本书的示例代码都是在 Travis-CI(基于 Linux 的系统) 和 AppVeyor(Windows) 上自动测试的。你可以在 [Gihub仓库](https://github.com/BruceEckel/OnJava8-Examples) 上的 Readme 看到通过/失败的标记。
 
 <!-- Summary -->
 
 ## 本章小结
 
+"它在我的机器上正常工作了。" "我们不会运载你的机器！"
+
+代码校验不是单一的过程或技术。每种方法只能发现特定类型的 bug，作为程序员的你在开发过程中会明白每个额外的技术都能增加代码的可靠性和鲁棒性。校验不仅能在开发过程中，还能在为应用添加新功能的整个项目期间帮你发现更多的错误。现代化开发意味着比仅仅编写代码更多的内容，每种你在开发过程中融入的测试技术—— 包括而且尤其是你创建的能适应特定应用的自定义工具——都会带来更好、更快和更加愉悦的开发过程，同时也能为客户提供更高的价值和满意度体验。
+
 <!-- 分页 -->
+
